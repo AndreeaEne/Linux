@@ -59,14 +59,13 @@ int main()
 		return errno;
 	}
 
-	char z[4] = {'1','2','3','4'};
+	char z[] = {'1','2','3','4'};
 
-	srand(time(0)); 		       /* generam un numar aleator intreg */
+	srand((unsigned)time(0)); 		       /* generam 4 numere aleatoare intregi */
 	for (int i = 0; i < 4; i++)
 	{
-		printf("%d\n", z[i]);
-		z[i] = rand() % 10;    /* ce va avea valori intre 0 si 9 */
-		printf("%d\n", z[i]);
+		z[i] = rand() % 10;    /* ce vor avea valori intre 0 si 9 */
+		//printf("%d\n", z[i]); - TEST -
 	}
 
 
@@ -105,39 +104,46 @@ int main()
 		printf("Mesajul a fost receptionat...\n" "Trimitem mesajul inapoi...");
 
 		/* Regulile de generare a numarului */
-		int x, h = 0, i;
+		int x, h = 0, i, j;
 		char buffer2[4];
 
+		printf("\n(Numarul este: ");
 		for (int i = 0; i < 4; i++)
 		{
 			printf("%d", z[i]);
 
 			/* Verifica daca cifra este corecta si afiseaza un 0 */
-			if (buffer[i] == z[i])
+			/*if (buffer[i] == z[i])
 			{
 				buffer2[h] = '0';
 				h++; 
-			}
+			}*/
 		}
+		printf(")\n");
 
-			/* Verifica faca cifra este corecta si se afla pe o pozitie diferita. Afiseaza un X */
-		for (int i = 0; i < 4; i++)
+			/* Verifica daca cifra este corecta si se afla pe o pozitie diferita. Afiseaza un X */
+		for (i = 0; i < 4; i++)
 		{
-			for (int j = 0; j < 4; j++)
+			for (j = 0; j < 4; j++)
 			{
-				if ((z[j] == buffer[i]) && i != j)
+				if ((buffer[i] == z[j]) && (i != j))
 				{
 					buffer2[h] = 'X';
 					h++;
 				}
+				else if ((buffer[i] == z[j]) && (i == j))
+					buffer2[h] = 'O';
+					h++;
 			}
 
 		}
 
+		/* Copiem in buffer numarul */
 		for (i = 0; i < 4; i++)
 			buffer[i] = buffer2[i];
 		for (i = 0; i < 4; i++)
-			buffer2[i] =' ';
+			buffer2[i] = ' ';
+	
 
 
 		/* Returnam mesajul inapoi */

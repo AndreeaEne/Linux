@@ -62,7 +62,7 @@ int main(int argc, char *argv[])
 		bzero(buffer, 100);
 		printf("Introduceti mesajul: ");
 		fflush(stdout);
-		read(0,buffer,100);
+		read(0, buffer, 100);
 
 		if(write(sd,buffer,100) <= 0)
 		{
@@ -78,7 +78,7 @@ int main(int argc, char *argv[])
 		}
 
 		/* Afisam rezultatul primit */
-		printf("Mesajul primit este: '%s'.\n", buffer);
+		printf("Mesajul primit este: %s.\n", buffer);
 	}
 
 	/* Inchidem conexiunea */
