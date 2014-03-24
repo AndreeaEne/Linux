@@ -27,7 +27,7 @@ int main(int argc, char *argv[])
 	struct sockaddr_in server;		/* Structura folosita pentru conectare */
 	char buffer[100];				/* Mesajul trimis */
 
-	/* Verifica faca exista toate argumentele in linia de comanda */
+	/* Verifica daca exista toate argumentele in linia de comanda */
 	if(argc != 3)
 	{
 		printf("Sintaxa: %s <adresa_server> <port>\n",argv[0]);

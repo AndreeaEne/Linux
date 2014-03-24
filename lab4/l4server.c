@@ -4,14 +4,15 @@
 */
 
 
-#include<sys/types.h>
-#include<sys/socket.h>
-#include<netinet/in.h>
-#include<errno.h>
-#include<unistd.h>
-#include<stdio.h>
-#include<string.h>
-#include<stdlib.h>
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <errno.h>
+#include <unistd.h>
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#include <time.h>
 
 /* portul folosit */
 #define PORT 8081
@@ -58,12 +59,14 @@ int main()
 		return errno;
 	}
 
-	char z[] = {'1','2','3','4'};
+	char z[4] = {'1','2','3','4'};
 
-	srand (time(0); 		    /* generam un numar aleator intreg */
+	srand(time(0)); 		       /* generam un numar aleator intreg */
 	for (int i = 0; i < 4; i++)
 	{
+		printf("%d\n", z[i]);
 		z[i] = rand() % 10;    /* ce va avea valori intre 0 si 9 */
+		printf("%d\n", z[i]);
 	}
 
 
@@ -87,7 +90,7 @@ int main()
 		}
 
 		/* Am realizat conexiunea, astept maesajul...*/
-		bzero (buffer,100);
+		bzero (buffer, 100);
 		printf ("Asteptam mesajul...\n");
 		fflush (stdout);
 
@@ -99,10 +102,10 @@ int main()
 			continue;									/* Continuam sa ascultam */
 		}
 
-		printf("Mesajul a fost receptionat...\n Trimitem mesajul inapoi...");
+		printf("Mesajul a fost receptionat...\n" "Trimitem mesajul inapoi...");
 
-		/* Regulile jocului */
-		int x, h = 0;
+		/* Regulile de generare a numarului */
+		int x, h = 0, i;
 		char buffer2[4];
 
 		for (int i = 0; i < 4; i++)
@@ -110,7 +113,7 @@ int main()
 			printf("%d", z[i]);
 
 			/* Verifica daca cifra este corecta si afiseaza un 0 */
-			if( buffer[i] == z[i])
+			if (buffer[i] == z[i])
 			{
 				buffer2[h] = '0';
 				h++; 
@@ -122,7 +125,7 @@ int main()
 		{
 			for (int j = 0; j < 4; j++)
 			{
-				if (z[j] == buffer[i] && i != j)
+				if ((z[j] == buffer[i]) && i != j)
 				{
 					buffer2[h] = 'X';
 					h++;
@@ -130,11 +133,11 @@ int main()
 			}
 
 		}
-		
+
 		for (i = 0; i < 4; i++)
 			buffer[i] = buffer2[i];
 		for (i = 0; i < 4; i++)
-			bufferuffer2[i] = ' ';
+			buffer2[i] =' ';
 
 
 		/* Returnam mesajul inapoi */
@@ -144,7 +147,7 @@ int main()
 			continue;	/* Continuam sa ascultam */
 		}
 			else 
-			printf("transmitere cu succes.\n");
+			printf("Transmitere cu succes.\n");
 
 		/* Inchidem conexiunea */
 		close(client);
