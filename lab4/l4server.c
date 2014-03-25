@@ -142,7 +142,7 @@ int main()
 		for (i = 0; i < 4; i++)
 			buffer[i] = buffer2[i];
 		for (i = 0; i < 4; i++)
-			buffer2[i] = ' ';
+			buffer2[i] = 'Y';
 	
 
 
