@@ -1,0 +1,7 @@
+A computer assisted method for the recording and analyzing of existing or hypothetical systems is
+
+A.	Data transmission
+B.	Data flow
+C.	Data capture
+D.	Data processing
+E.	None of the above

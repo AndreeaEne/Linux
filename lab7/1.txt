@@ -1,0 +1,7 @@
+Which of the following languages is more suited to a structured program?
+
+A.PL/1
+B.FORTRAN
+C.BASIC
+D.PASCAL
+E.None of the above

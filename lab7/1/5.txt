@@ -1,0 +1,7 @@
+Cat dureaza un curs?
+a. 2 ore
+b. 3 ore
+c. 2.5 ore
+d. o ora
+e. 1.3 ore
+
