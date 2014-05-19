@@ -43,7 +43,11 @@ void copiaza(char *nume, int i)
 			strcat(nume, persoana[i].nume);
 			strcat(nume, " ");
 			strcat(nume, persoana[i].prenume);
-			strcat(nume, " \n");
+			//strcat(nume, " ");
+			//strcat(nume, persoana[i].localitate);
+			//strcat(nume, " ");
+			//strcat(nume, persoana[i].varsta);
+
 }
 
 
@@ -57,8 +61,9 @@ void verif_Ani(char *nume)
 		if(persoana[i].varsta > 30)
 		{
 			copiaza(nume, i);
+			strcat(nume, "\n");
 		}
-		strcat(nume, "\n");
+		
 	}
 }
 
@@ -66,25 +71,30 @@ void verif_Ani(char *nume)
 void verif_Bucuresti(char *nume)
 {
 	int i;
-	for(i = 0; i < 5; i++)
-		/**verificam daca localitatea unei persoane este *Bucuresti***/
+	for(i = 0; i < 5; i++){
+		/**verificam daca localitatea unei persoane este #Bucuresti#**/
 		if(!strcmp(persoana[i].localitate, "Bucuresti"))
 		{
 			copiaza(nume, i);
+			strcat(nume, "\n");
 		}
-		strcat(nume, "\n");
+		
+	}
 }
 
-/**functie ce veridica daca prima litera din nume este *C***/
+/**functie ce verifica daca prima litera din nume este #C#**/
 void verif_C(char *nume)
 {
 	int i;
-	for(i = 0; i < 5; i++)
-		if(persoana[i].nume[0] == "C")
-	{
-		copiaza(nume, i);
+	//char C = "C";
+	for(i = 0; i < 5; i++){
+		if(strchr(&persoana[i].nume[0], 'C'))
+		{
+			copiaza(nume, i);
+			strcat(nume, "\n");
+		}
+	
 	}
-	strcat(nume, "\n");
 }
 
 /** adaugare persoane in baza de date **/
@@ -107,6 +117,8 @@ void adauga_Pers()
 
 	}
 }
+
+
 
 /**programul principal**/
 int main()
@@ -146,12 +158,12 @@ int main()
 	bzero(&server, sizeof(server));
 
 	//umplem structura folosita de server
-	server.sin_family=AF_INET;
-	server.sin_addr.s_addr=htonl (INADDR_ANY);
-	server.sin_port=htons (PORT);
+	server.sin_family = AF_INET;
+	server.sin_addr.s_addr = htonl (INADDR_ANY);
+	server.sin_port = htons (PORT);
 
 	//atasam socketul
-	if(bind(sd,(struct sockaddr *) &server, sizeof(struct sockaddr))==-1)
+	if(bind(sd,(struct sockaddr *) &server, sizeof(struct sockaddr)) == -1)
 	{
 		perror("Eroare la bind().\n");
 		return errno;
@@ -215,10 +227,10 @@ int main()
 		}
 		//vedem daca e pregatit vreun socket client pt a face echo
 		//parcurgem multimea de descriptori
-		for(fd=0;fd<=nfds;fd++)
+		for(fd = 0; fd <= nfds; fd++)
 		{
 			//este un socket de citire pregatit?
-			if(fd!=sd&&FD_ISSET(fd,&readfds))
+			if(fd != sd && FD_ISSET(fd, &readfds))
 			{
 				//n-a putut fi trimis mesajul
 				if(echo(fd)==0)
@@ -239,31 +251,39 @@ int echo(int fd)
 {
 	//mesajul
 	char buffer[100];
+
 	//numarul de octeti cititi/scrisi
 	int bytes;
-	bytes=read(fd, buffer, sizeof(buffer));
-	if(bytes<0)
+	bytes = read(fd, buffer, sizeof(buffer));
+	if(bytes < 0)
 	{
 		perror("Eroare la read() de la client.\n");
 		return 0;
 	}
-	adauga_Pers();
+	//adauga_Pers();
+
 	if(!strcmp(buffer, "localitate\n"))
 	{
 		strcpy(buffer, "\n");
 		verif_Bucuresti(buffer);
 	}
 
-		if(!strcmp(buffer, "varsta\n"))
+	if(!strcmp(buffer, "varsta\n"))
 	{
 		strcpy(buffer, "\n");
 		verif_Ani(buffer);
 	}
 
-		if(!strcmp(buffer, "Litera_C\n"))
+	if(!strcmp(buffer, "Litera_C\n"))
 	{
 		strcpy(buffer, "\n");
 		verif_C(buffer);
+	}
+
+	if(!strcmp(buffer, "adauga\n"))
+	{
+		
+		adauga_Pers();
 	}
 
 	if(bytes && write(fd, buffer, bytes)<0)

@@ -57,7 +57,7 @@ int main(int argc, char *argv[])
 					perror("Eroare la read() de la server.\n");
 					return errno;
 				}
-			printf("Mesajul primit este: '%s'.\n",buffer);
+			printf("Mesajul primit este: %s \n",buffer);
 		}
 		close(sd);
 	}
